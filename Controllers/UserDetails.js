@@ -1,6 +1,5 @@
 const Users = require("../models/Users.js");
 
-//get all the one sale data on ID
 exports.getSingleUser = async(req,res)=>{
     try {
         const {
@@ -30,7 +29,6 @@ exports.getSingleUser = async(req,res)=>{
     }
 }
 
-// update same sale based on v.number
 exports.updateUserDetail = async(req,res)=>{
     try{
 
@@ -57,6 +55,11 @@ exports.updateUserDetail = async(req,res)=>{
             });
         }
 
+        const now = new Date();
+        const formattedDate = now.toLocaleString('en-US',  { timeZone: 'Asia/Kolkata' });
+
+        const [newdate, newtime] = formattedDate.split(',').map(part => part.trim());
+
         const userData = await Users.findByIdAndUpdate({_id:id},
                 {
                     name,
@@ -65,11 +68,9 @@ exports.updateUserDetail = async(req,res)=>{
                     services,
                     result,
                     response,
-                    source,
                     followDate,
-                    followResult,
-                    date,
-                    time
+                    date:newdate,
+                    time:newtime
               },
             {new: true},
         );

@@ -8,6 +8,15 @@ exports.fileUpload = async(req,res)=>{
 
         let result = [];
 
+        const teleDetails = await TeleCaller.findOne({_id:id});
+
+        if(!teleDetails){
+            return res.status(404).json({
+                success:false,
+                message:'No Telecaller using this Id'
+            });
+        }
+
         for(let i=0;i<data.length;i++){
             result.push({
                 name:data[i].Name,
@@ -22,6 +31,7 @@ exports.fileUpload = async(req,res)=>{
                 result:data[i].Result,
                 response:data[i].Response,
                 services:data[i].Services,
+                assignedTo:teleDetails.fullName
             });
         }
 
@@ -38,8 +48,6 @@ exports.fileUpload = async(req,res)=>{
             const fileData = await TeleCaller.findOneAndUpdate({_id:id},
                 { $push: { UsersData: userData[i]._id}},
             );
-
-            console.log(fileData);
         }
 
         return res.status(200).json({
@@ -55,8 +63,6 @@ exports.fileUpload = async(req,res)=>{
         });
     }
 }
-
-
 
 exports.getAllUsersData = async(req,res)=>{
     try {
@@ -85,3 +91,4 @@ exports.getAllUsersData = async(req,res)=>{
         });
     }
 }
+

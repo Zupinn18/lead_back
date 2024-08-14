@@ -50,6 +50,10 @@ const usersSchema = new mongoose.Schema({
         },
         messages:{
             type : Array ,
+        },
+        assignedTo:{
+            type:String,
+            required:true
         }
 });
 
