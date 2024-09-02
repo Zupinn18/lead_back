@@ -33,8 +33,9 @@ exports.resetPasswordToken = async (req, res) => {
             );
 
         console.log('DETAILS: ', updatedDetails);
-        //create url
-        const url = `http://localhost:3000/update-password/${token}`; 
+        //create url 
+        // const url = `http://localhost:3000/update-password/${token}`; 
+        const url = `https://leads.zupinn.com/${token}`; 
         //send mail containing the url
         await mailSender(
             email,
