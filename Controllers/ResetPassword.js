@@ -35,8 +35,8 @@ exports.resetPasswordToken = async (req, res) => {
         console.log('DETAILS: ', updatedDetails);
         //create url 
         // const url = `http://localhost:3000/update-password/${token}`; 
-        // const url = `https://leads.zupinn.com/update-password/${token}`; 
-        const url = `https://leads-zupinn.netlify.app/update-password/${token}`; 
+        const url = `https://leads.zupinn.com/update-password/${token}`; 
+        // const url = `https://leads-zupinn.netlify.app/update-password/${token}`; 
         //send mail containing the url
         await mailSender(
             email,
