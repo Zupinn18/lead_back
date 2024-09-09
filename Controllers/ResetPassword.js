@@ -83,6 +83,7 @@ exports.resetPassword = async (req, res) => {
                 message: 'Password And Confirm Password Does Not Match',
             });
         }
+        
         //get userdetails from db using token
         const userDetail = await User.findOne({token: token});
 

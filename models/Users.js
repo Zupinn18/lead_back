@@ -18,27 +18,21 @@ const usersSchema = new mongoose.Schema({
         },
         services:{
             type:String,
-            required:true,
         },
         result:{
             type:String,
-            required:true,
         },
         response:{
             type:String,
-            required:true,
         },
         source:{
             type:String,
-            required:true,
         },
         followDate:{
             type:String,
-            required:true,
         },
         followResult:{
             type:String,
-            required:true,
         },
         date:{
             type:String,
