@@ -92,7 +92,7 @@ exports.AddSheetTeleCaller = async(req,res) =>{
 exports.getAllTeleCaller = async(req,res)=>{
     try {
         
-        const allUser = await Users.find().populate("UsersData").exec();
+        const allUser = await Users.find().populate("UsersData DailyTask Attendence").exec();
     
         if(!allUser){
             return res.status(403).json({

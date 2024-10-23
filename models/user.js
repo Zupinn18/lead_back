@@ -19,6 +19,18 @@ const teleCallerSchema = new mongoose.Schema({
         token: {
             type : String,
         },
+        Attendence:[
+            {
+                type: mongoose.Types.ObjectId, 
+                ref: "Attendence" 
+            }
+        ],
+        DailyTask:[
+            {
+                type: mongoose.Types.ObjectId, 
+                ref: "DailyTask" 
+            }
+        ],
         accountType: {
             type: String,
             enum: ['Admin', 'User'],

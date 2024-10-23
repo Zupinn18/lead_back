@@ -92,3 +92,77 @@ exports.getAllUsersData = async(req,res)=>{
     }
 }
 
+//create single lead data upload
+exports.createSingleLead = async(req,res)=>{
+    try {
+        
+        const {id, 
+            Name,
+            Email,
+            Mobile,
+            Services,
+            resultUser,
+            Source,
+            Response,
+            FollowDate,
+            FollowResult,
+        } = req.body;
+
+        let Result = [];
+
+        const teleDetails = await TeleCaller.findOne({_id:id});
+
+        if(!teleDetails){
+            return res.status(404).json({
+                success:false,
+                message:'No Telecaller using this Id'
+            });
+        }
+
+        const now = new Date();
+        const formattedDate = now.toLocaleString('en-US',  { timeZone: 'Asia/Kolkata' });
+
+        const [newdate, newtime] = formattedDate.split(',').map(part => part.trim());
+
+        Result.push({
+                name:Name,
+                email:Email,
+                mobile:Mobile,
+                uploadedOnDate:Date.now(),
+                source:Source,
+                date:newdate,
+                time:newtime,
+                followResult:FollowResult,
+                followDate:FollowDate,
+                result:resultUser,
+                response:Response,
+                services:Services,
+                assignedTo:teleDetails.fullName
+            });
+
+        const userData = await UsersData.create(Result);
+        
+        if(!userData){
+            return res.status(403).json({
+                success:false,
+                message:'Error while uploading single lead data'
+            })
+        }
+
+        const fileData = await TeleCaller.findOneAndUpdate({_id:id},
+                { $push: { UsersData: userData[0]._id}},
+            );
+
+        return res.status(200).json({
+            success:true,
+            message:'Data uploaded successfully',
+            data:userData
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Can't upload Single Lead File due to ${error.message}`,
+        });
+    }
+}

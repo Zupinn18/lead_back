@@ -93,12 +93,20 @@ exports.updateUserDetail = async(req,res)=>{
 exports.updateMessage = async(req,res)=>{
     try{
 
-        const {
+        let {
             message
         } = req.body;
         //validate fields
 
         const id = req.params.id;
+
+        let currentDate = new Date();
+        // Format the date and time (optional, for readability)
+        let formattedDate = currentDate.toLocaleDateString(); // e.g., '10/17/2024'
+        let formattedTime = currentDate.toLocaleTimeString(); // e.g., '11:24:35 AM'
+
+        // Append the date and time to the message
+        message += ` (Date: ${formattedDate}, Time: ${formattedTime})`;
 
         if(!id || !message ){
             return res.status(403).json({
@@ -110,6 +118,11 @@ exports.updateMessage = async(req,res)=>{
         const userData = await Users.findOneAndUpdate({_id:id},
               { $push: { messages: message}},
         );
+
+        // Users.messages.push({ message: message });
+        
+        // // Save the user with the updated messages array
+        // await Users.save();
 
         return res.status(200).json({
             success:true,

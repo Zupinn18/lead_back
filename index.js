@@ -12,7 +12,8 @@ const RbmRoutes = require("./Routes/rbmRoute.js");
 const UsersRoutes = require("./Routes/UsersRoute.js");
 const userDetailsRoutes = require("./Routes/userDetailRoutes.js");
 const TeleCallerRoute = require("./Routes/TeleCallerRouter.js");
-
+const AttendenceRoute = require("./Routes/attendenceRoute.js");
+const DailyRoute = require("./Routes/DailyTaskRoute.js");
 
 const PORT = process.env.PORT || 5000;
 
@@ -36,6 +37,8 @@ app.use('/api/v1/rbm',RbmRoutes);
 app.use('/api/v1/upload',UsersRoutes);
 app.use('/api/v1/user',userDetailsRoutes);
 app.use('/api/v1/telecaller',TeleCallerRoute);
+app.use('/api/v1/attendence',AttendenceRoute);
+app.use('/api/v1/task',DailyRoute);
 
 app.get('/', (req,res)=>{
     res.send('Hey, I am Backend Server Route');
