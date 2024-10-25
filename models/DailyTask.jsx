@@ -18,6 +18,14 @@ const DailyTaskSchema = new mongoose.Schema({
     },
     currentStatus:{
         type:String,
+        default:'Pending',
+    },
+    lastSubmissionDate:{
+        type:Date,
+    },
+    completionPercentage:{
+        type:String,
+        default:'0',
     },
 });
 

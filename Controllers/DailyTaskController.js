@@ -4,13 +4,12 @@ const User = require('../models/user.js');
 exports.CreateDailyTask = async(req,res)=>{
     try {
 
-        const {id, task, completedOn, currentStatus} = req.body;
-
+        let {id, task, lastSubmissionDate} = req.body;
+    
         const dailyData = await DailyTask.create({
             assignedTo:id,
             task,
-            completedOn,
-            currentStatus
+            lastSubmissionDate
         });
 
         const UserData = await User.findOneAndUpdate({_id:id},
@@ -27,7 +26,7 @@ exports.CreateDailyTask = async(req,res)=>{
         console.log(error.message);
         return res.status(500).json({
             success:false,
-            message:`Unable to mark Attendence due to ${error.message}`
+            message:`Unable to Assign task due to ${error.message}`
         });
     }
 }
@@ -35,11 +34,12 @@ exports.CreateDailyTask = async(req,res)=>{
 exports.UpdateDailyTask = async(req,res)=>{
     try {
 
-        const {id, currentStatus} = req.body;
+        const {id, currentStatus, completionPercentage} = req.body;
 
         const dailyData = await DailyTask.findOneAndUpdate({_id:id},
             {
-                currentStatus:currentStatus
+                currentStatus:currentStatus,
+                completionPercentage:completionPercentage,
             });
 
             return res.status(200).json({
